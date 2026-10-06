@@ -12,6 +12,7 @@ It's a realization, not a feature: "I know whether I can make payroll next month
 
 How I got there:
 - **Module 1 ruled out setup as the Aha.** When the share of users importing data rose from ~31% to ~45%, conversion didn't move. Setup is a step on the way, not the payoff.
+- **The forecast is FinWise's Modeling feature, and Modeling is the only usage signal in the data that moves with conversion.** Across 13 months, monthly Modeling adoption correlates +0.24 with trial → paid; Data Import correlates −0.05. That's weak, aggregate evidence, and I'm not calling it proof. But it points the same way as the argument below, and Import points nowhere. One caution I'm carrying into Module 4: Modeling adoption also correlates +0.54 with the churn column. If that holds up at the user level, forecasting attracts users it doesn't keep, and this Aha is wrong.
 - **Small-business owners don't buy finance software to see their past.** They buy it to answer a question about the future: will I have enough? The forecast is the first screen that answers it.
 - **It sets up the Module 1 loop.** A forecast with a tight week in it is something worth sending to an accountant. Value comes first, then the invite.
 
@@ -45,7 +46,7 @@ The Aha lands on screen 3: the first time the user sees their own numbers projec
 
 **How I'll measure it** (the deck's four onboarding metrics):
 - **Activation rate:** % of trials that view a forecast built from a connected account in session 1.
-- **Time to Aha:** median minutes from sign-up to first forecast view. Target: under 5.
+- **Time to Aha:** median minutes from sign-up to first forecast view. Target: under 5 (the activation definition allows up to 10, so most users should clear it easily).
 - **Drop-off rate:** by screen. Screen 2 (bank connection) is the highest-risk step. Some owners won't connect a bank on day 1, which is why sample data is offered.
 - **Post-onboarding retention:** 30-day return rate of activated vs. non-activated trials. If activated users don't come back, the Aha wasn't sticky. That's a product problem, not an onboarding one.
 
