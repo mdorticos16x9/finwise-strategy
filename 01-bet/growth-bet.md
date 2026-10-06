@@ -7,9 +7,9 @@
 **Problem.** 98% of FinWise trials end without a purchase. In the data we have, that rate holds at about 2% whatever happens to traffic or feature adoption.
 
 **Formalized hypothesis.**
-- **IF** trial users who finish their data import are prompted to invite their accountant or bookkeeper to review an auto-generated monthly report
+- **IF** trial users who finish their data import are prompted to invite their accountant or bookkeeper to review an auto-generated 30-day cash forecast
 - **THEN** the share of trials with an accepted accountant invite WILL increase from ~5% to 10%, and trial → paid WILL follow, from 2.0% toward 2.5%
-- **BECAUSE** a solo user can set FinWise up without ever producing an outcome another person relies on. Once an accountant works from FinWise's report, leaving the product has a cost.
+- **BECAUSE** a solo user can set FinWise up without ever producing an outcome another person relies on. Once an accountant works from FinWise's forecast, leaving the product has a cost.
 - **MEASURED WITH** an A/B test on new trials, enrolling ~870 trials (≈ 8 weeks at FinWise's ~494 trials/month), read at trial end.
   - **Primary (decision) metric:** % of trials with ≥1 accepted accountant invite. Sized to detect 5% → 10% at 95% confidence and 80% power (~434 trials per arm).
   - **Lagging metric (tracked, not decided on):** trial → paid.
@@ -51,7 +51,7 @@ I run small businesses. A finance tool shows me nothing until it has my real num
 
 **Focus: a collaboration-to-referral hybrid loop at the end of activation.** Small-business finance is shared work between the owner, a bookkeeper, and an accountant. A user who brings their accountant in gains a reason to stay. That first step is Collaboration: the owner invites someone to do shared work. The accountant sits outside the company and serves many clients, so the loop's second step works like Referral: the accountant brings other businesses in. Plain referral loops ask users for a favour. This one makes the invite part of the job.
 
-**Why conversion before churn.** I'm treating 2% conversion and 60% churn as one problem, not two. Both come from users never reaching a result they depend on. Today some users pay before they get there, and those are the ones likely to leave. If the trial gets them to a shared, relied-on report first, we should convert more people *and* convert better people. A retention-first plan would polish the experience for the 128 customers who converted over the last 13 months, while the trial failed the other 6,296.
+**Why conversion before churn.** I'm treating 2% conversion and 60% churn as one problem, not two. Both come from users never reaching a result they depend on. Today some users pay before they get there, and those are the ones likely to leave. If the trial gets them to a shared, relied-on forecast first, we should convert more people *and* convert better people. A retention-first plan would polish the experience for the 128 customers who converted over the last 13 months, while the trial failed the other 6,296.
 
 **How I'll know it helps retention, not just conversion.** Secondary metric: 90-day paid retention, treatment vs control. Honest limit: at ~10 conversions per test the retention read is directional only. So I'll also track a leading signal: % of new paid accounts with an active outside collaborator at day 30. If the bet works, that number goes up and churn among those accounts goes down over the following two quarters.
 
@@ -67,7 +67,7 @@ I run small businesses. A finance tool shows me nothing until it has my real num
 
 ```mermaid
 flowchart LR
-  T["Trigger: owner starts trial<br/>and imports books"] --> S1["Stage 1: FinWise generates<br/>a monthly report worth sharing"]
+  T["Trigger: owner starts trial<br/>and imports books"] --> S1["Stage 1: FinWise generates<br/>a 30-day cash forecast worth sharing"]
   S1 --> S2["Stage 2: owner invites<br/>accountant / bookkeeper to review"]
   S2 --> S3["Stage 3: accountant works in FinWise<br/>and sees value across clients"]
   S3 --> O["Outcome: owner converts;<br/>shared workflow now depends on FinWise"]
@@ -76,7 +76,7 @@ flowchart LR
 ```
 
 1. **Trigger:** a business owner starts a trial and imports their books.
-2. **Stage 1:** FinWise generates a report worth sharing (monthly P&L, cash-flow forecast).
+2. **Stage 1:** FinWise generates a 30-day cash forecast worth sharing. This is the Aha moment defined in Module 2.
 3. **Stage 2:** the owner invites their accountant or bookkeeper to review it.
 4. **Stage 3:** the accountant works inside FinWise and sees value across their client list.
 5. **Outcome:** the owner converts because their workflow depends on the shared space. The accountant brings in other clients, restarting the loop with a bigger base and no ad spend.
