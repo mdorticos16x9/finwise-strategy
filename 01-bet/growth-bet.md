@@ -20,12 +20,14 @@
 
 ### How I got here
 
-**First hunch (scenario only, before the data).** The biggest problem is activation. Trial users never reach a moment where the product proves its value, so paid acquisition fills a bucket with a hole in it. Evidence:
-1. Only 2% of trials convert, even though the reverse trial gives full access. Access is not the barrier. Value is.
-2. 60% of paying customers churn within a year. Even converted users don't find lasting value.
-3. More ad spend no longer moves growth. The constraint sits after sign-up.
+**First hunch (scenario only, before the data).** I think FinWise's biggest problem is that people try the product and never see it do anything for their business. Ads are buying sign-ups for a product that isn't closing them.
 
-My first bet was "get users to import their data on day 1."
+Why I think that:
+1. It's a reverse trial. People get the full product for free and 98% still walk away. They aren't blocked from the value. They just never reach it.
+2. Six in ten paying customers leave within a year. So even the ones who pay aren't getting enough to stay. That's the same problem, showing up later.
+3. More ad money stopped working. If the leak were at the top, more money would help. It doesn't, so the leak is after sign-up.
+
+I run small businesses. A finance tool shows me nothing until it has my real numbers in it. So my first bet was simple: get people to connect their books on day one.
 
 **What the data showed (Oct 2023 – Oct 2024).**
 
@@ -49,9 +51,14 @@ My first bet was "get users to import their data on day 1."
 
 **Focus: a collaboration-to-referral hybrid loop at the end of activation.** Small-business finance is shared work between the owner, a bookkeeper, and an accountant. A user who brings their accountant in gains a reason to stay. That first step is Collaboration: the owner invites someone to do shared work. The accountant sits outside the company and serves many clients, so the loop's second step works like Referral: the accountant brings other businesses in. Plain referral loops ask users for a favour. This one makes the invite part of the job.
 
+**Why conversion before churn.** I'm treating 2% conversion and 60% churn as one problem, not two. Both come from users never reaching a result they depend on. Today some users pay before they get there, and those are the ones likely to leave. If the trial gets them to a shared, relied-on report first, we should convert more people *and* convert better people. A retention-first plan would polish the experience for 128 new customers a year while the trial keeps failing 6,300 others.
+
+**How I'll know it helps retention, not just conversion.** Secondary metric: 90-day paid retention, treatment vs control. Honest limit: at ~10 conversions per test the retention read is directional only. So I'll also track a leading signal: % of new paid accounts with an active outside collaborator at day 30. If the bet works, that number goes up and churn among those accounts goes down over the following two quarters.
+
 **What we're deliberately NOT doing.**
 - Not raising paid acquisition or optimizing visit → trial. At a fixed 2% conversion, more trials just scale the leak.
 - Not pushing more feature adoption (import, modeling) as the goal. The data says it doesn't move conversion on its own.
+- Not running churn-only plays yet (win-back offers, annual-plan discounts). They treat the symptom. Module 3 covers engagement and retention mechanics; I'll revisit there.
 - Not building a referral-reward program yet. Incentives without a working Aha moment buy sign-ups that churn.
 
 **Biggest risk to this bet.** Many FinWise users may be solo owners with no outside accountant. If so, the invite step has no one to go to. Next check: the share of trial accounts with an accountant or bookkeeper.
