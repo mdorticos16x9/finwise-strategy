@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FinWise Weekly Cash Check</title>
+<meta name="description" content="Wireframe of FinWise's gamification mechanic: a forecast-confidence progress bar that fills as the owner confirms what's coming this week.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f6f4ee;--card:#fffdf8;--ink:#14212b;--ink-2:#4a5862;--ink-3:#6b7780;--line:#e2ddd1;--green:#1f6b4f;--green-soft:#e3efe8;--amber:#a2560b;--amber-soft:#fbeedd;--focus:#2d6cdf;--shadow:0 1px 2px rgba(20,33,43,.06),0 8px 24px -12px rgba(20,33,43,.18)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#11181d;--card:#172028;--ink:#eef1ee;--ink-2:#b4bec4;--ink-3:#8d989f;--line:#2a353d;--green:#5fc59a;--green-soft:#183429;--amber:#f0a65a;--amber-soft:#3a2914;--focus:#7aa7ff;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6)}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.5 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.shell{max-width:720px;margin:0 auto;padding:24px 16px 64px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.brand svg{width:26px;height:26px}
+.meta{font-size:13px;color:var(--ink-3)}
+.label{font-size:13px;color:var(--ink-3);margin-bottom:8px}
+h1{font-size:clamp(26px,5vw,34px);line-height:1.15;letter-spacing:-.025em;font-weight:600;text-wrap:balance;margin-bottom:10px}
+.lede{color:var(--ink-2);max-width:58ch;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
+.conf-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.conf-top b{font-size:15px}
+.pct{font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.bar{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;background:var(--green);border-radius:7px;transition:width .6s cubic-bezier(.16,1,.3,1)}
+.steps{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:8px}
+.low{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin-top:16px;background:var(--amber-soft)}
+.low.ok{background:var(--green-soft)}
+.low svg{flex:none;width:20px;height:20px;margin-top:2px;stroke:var(--amber)}
+.low.ok svg{stroke:var(--green)}
+.low p{font-size:15px;color:var(--ink-2)}
+.low b{color:var(--ink)}
+h2{font-size:17px;letter-spacing:-.01em;margin:4px 0 12px}
+.items{display:grid;gap:10px}
+.item{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:inherit;font:inherit;cursor:pointer;transition:border-color .2s}
+.item:hover{border-color:var(--ink-3)}
+.item .box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--ink-3);display:grid;place-items:center}
+.item[aria-pressed="true"] .box{background:var(--green);border-color:var(--green)}
+.item[aria-pressed="true"] .box svg{display:block}
+.box svg{display:none;width:14px;height:14px;stroke:#fff}
+.item .t{flex:1}
+.item .t b{display:block;font-weight:600}
+.item .t small{color:var(--ink-3);font-size:14px}
+.item .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.item .pts{font-size:12px;color:var(--green);font-weight:600;white-space:nowrap}
+.done{display:none;margin-top:16px;padding:16px;border-radius:12px;background:var(--green-soft)}
+.done.on{display:block}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.note{font-size:13px;color:var(--ink-3);margin-top:36px;border-top:1px solid var(--line);padding-top:14px;max-width:64ch}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="brand"><svg viewBox="0 0 26 26" fill="none" aria-hidden="true"><rect width="26" height="26" rx="7" fill="var(--ink)"/><path d="M7 17l4-5 3 3 5-7" stroke="var(--paper)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>FinWise</div>
+  <div class="meta">Rivera Landscaping LLC · Mon, Oct 19</div>
+</header>
+
+<p class="label">Weekly cash check · 4 items to confirm</p>
+<h1>Confirm what's coming, and your forecast gets sharper.</h1>
+<p class="lede">Each thing you confirm makes the next 30 days more accurate. Payroll week is coming up.</p>
+
+<section class="card" aria-labelledby="conf">
+  <div class="conf-top"><b id="conf">Forecast confidence</b><span class="pct" id="pct">60%</span></div>
+  <div class="bar" role="progressbar" aria-labelledby="conf" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><div class="fill" id="fill"></div></div>
+  <div class="steps"><span>Rough guess</span><span>Good</span><span>Confirmed</span></div>
+  <div class="low" id="low"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><p id="lowtxt"><b>Lowest point: $4,180 on Oct 28.</b> Based partly on guesses. Confirm the items below to firm it up.</p></div>
+</section>
+
+<section class="card" aria-labelledby="todo">
+  <h2 id="todo">This week</h2>
+  <div class="items">
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Payroll, Oct 24</b><small>Same as the last 3 cycles?</small></span><span class="amt">−$6,420</span><span class="pts">+10%</span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Rent, Oct 28</b><small>Recurring monthly</small></span><span class="amt">−$3,440</span><span class="pts">+10%</span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Greenway HOA invoice, due Nov 1</b><small>Paid on time the last 3 months</small></span><span class="amt">+$4,200</span><span class="pts">+10%</span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Ask Maria (your accountant) to review</b><small>She sees the same forecast and can leave notes</small></span><span class="amt"></span><span class="pts">+10%</span></button>
+  </div>
+  <div class="done" id="done" role="status" aria-live="polite"><b>Forecast confirmed for payroll week.</b> We'll bring next week's items on Monday. Confidence slips if they go unchecked, so your number never goes quietly stale.</div>
+</section>
+
+<p class="note">Wireframe for Product School · Product Analytics &amp; Experimentation, Module 3. FinWise and all data shown are fictional. Click the items to confirm them.</p>
+</div>
+<script>
+let pct=60; const fill=document.getElementById('fill'), pctEl=document.getElementById('pct'), bar=document.querySelector('.bar'), low=document.getElementById('low'), lowtxt=document.getElementById('lowtxt');
+function render(){fill.style.width=pct+'%'; pctEl.textContent=pct+'%'; bar.setAttribute('aria-valuenow',pct);
+  if(pct>=100){low.classList.add('ok'); lowtxt.innerHTML='<b>Lowest point: $4,180 on Oct 28, confirmed.</b> Every item behind this number is checked. Moving rent to Nov 1 keeps you above your $5,000 safety line.'; document.getElementById('done').classList.add('on');}
+  else {low.classList.remove('ok'); lowtxt.innerHTML='<b>Lowest point: $4,180 on Oct 28.</b> Based partly on guesses. Confirm the items below to firm it up.'; document.getElementById('done').classList.remove('on');}}
+document.querySelectorAll('.item').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')==='true'; b.setAttribute('aria-pressed',String(!on)); pct+= (on?-1:1)*Number(b.dataset.pts); render();}));
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
