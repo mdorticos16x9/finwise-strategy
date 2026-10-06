@@ -4,64 +4,54 @@
 
 ## Growth hypothesis
 
-**Problem.** 98% of FinWise trials end without a purchase. In the data we have, that rate holds at about 2% whatever happens to traffic or feature adoption.
+### Exercise 1 · My first hypothesis (scenario only, before the data)
 
-**Formalized hypothesis.**
-- **IF** trial users who finish their data import are prompted to invite their accountant or bookkeeper to review an auto-generated 30-day cash forecast
-- **THEN** the share of trials with an accepted accountant invite WILL increase from ~5% to 10%, and trial → paid WILL follow, from 2.0% toward 2.5%
-- **BECAUSE** a solo user can set FinWise up without ever producing an outcome another person relies on. Once an accountant works from FinWise's forecast, leaving the product has a cost.
-- **MEASURED WITH** an A/B test on new trials, enrolling ~870 trials (≈ 8 weeks at FinWise's ~494 trials/month), read at trial end.
-  - **Primary (decision) metric:** % of trials with ≥1 accepted accountant invite. Sized to detect 5% → 10% at 95% confidence and 80% power (~434 trials per arm).
-  - **Lagging metric (tracked, not decided on):** trial → paid.
-  - **Loop metrics:** invites sent per trial, invite acceptance rate, and new trials started by invited accountants (the loop's k-factor).
-  - **Guardrail:** data-import completion rate.
+**Your hypothesis.** I think FinWise's biggest problem is that people try the product and never see it do anything for their business. Ads are buying sign-ups for a product that isn't closing them.
 
-> **Known weakness: why trial → paid is not the primary metric.** Detecting 2.0% → 2.5% needs ~13,800 trials per arm, about 56 months of FinWise traffic. Even 2.0% → 3.0% needs ~15 months. A test that can't reach significance can't inform a decision. So I decide on a leading metric with a higher base rate and check that it predicts conversion. Two open assumptions: the ~5% baseline invite rate is a guess to be measured, and the link from accepted invites to conversion must be validated with user-level data (Module 4). If neither holds, Module 5 picks a non-A/B method.
-
-### How I got here
-
-**First hunch (scenario only, before the data).** I think FinWise's biggest problem is that people try the product and never see it do anything for their business. Ads are buying sign-ups for a product that isn't closing them.
-
-Why I think that:
+**Your evidence.**
 1. It's a reverse trial. People get the full product for free and 98% still walk away. They aren't blocked from the value. They just never reach it.
-2. Six in ten paying customers leave within a year. So even the ones who pay aren't getting enough to stay. That's the same problem, showing up later.
+2. Six in ten paying customers leave within a year. Even the ones who pay aren't getting enough to stay. Same problem, showing up later.
 3. More ad money stopped working. If the leak were at the top, more money would help. It doesn't, so the leak is after sign-up.
 
-I run small businesses. A finance tool shows me nothing until it has my real numbers in it. So my first bet was simple: get people to connect their books on day one.
+**Your bet.** Get people to connect their books on day one. I run small businesses. A finance tool shows me nothing until it has my real numbers in it.
 
-**What the data showed (Oct 2023 – Oct 2024).**
+**Testable hypothesis.**
+- **IF** new trial users get a guided first session that connects their bank or accounting data on day one
+- **THEN** trial → paid WILL increase from 2.0% to 2.5%
+- **BECAUSE** a finance tool shows no value until it holds the user's own numbers
+- **MEASURED WITH** an A/B test on new trials over 4 weeks of sign-ups; trial → paid as the primary metric, day-1 drop-off as the guardrail
 
-| Stage | 13-month total | Step conversion |
-|---|---|---|
-| Website visits | 94,558 | — |
-| Trials started | 6,424 | 6.8% of visits |
-| Paid | 128 | 2.0% of trials |
+### Exercise 2 · What the data showed
 
-1. **Trial → paid is flat.** It stays between 1.87% and 2.08% in all 13 months. Visits swing 3.4x and trial volume swings 2x, but conversion does not move. *Caveat:* paid equals round(trials × 2%) in every row, so this flatness is built into the case data. It describes the scenario, not observed user behavior.
-2. **Feature adoption rose; conversion didn't.** Data Import went from ~31% (Jan–Mar 2024) to ~45% (Jul–Sep 2024). Modeling went from 11% (Nov 2023) to 58% (Apr and Sep 2024). Correlation with trial → paid across the 13 months: import −0.05, modeling +0.24. These are monthly averages, so they say nothing about whether *individual* users who import convert more.
-3. **Session length and frequency move in opposite directions** (r = −0.81). Long-session months (12–14 min, 3–6 sessions/user) alternate with short, frequent ones (5–9 min, 7–9 sessions/user).
+![FinWise conversion funnel dashboard, 13 months](funnel-dashboard.jpg)
 
-**Biggest drop-off:** trial → paid. Funnel stage: **Activation.**
+*Dashboard and patterns generated by Gemini from the course dataset and the lab's prompt.*
 
-**Confirmed or challenged?** Both. The drop-off is at activation, as I guessed. Pattern 2 weakens my first bet: when the share of users importing data rose, overall conversion did not. That doesn't prove import is irrelevant; monthly totals can't show what each user did. It does mean "get users to import" lacks support in this data. So I moved the bet one step later: from *setting up* to *producing a result someone else relies on*. Module 4's user-level data should confirm or kill that.
+**The pattern that surprised me most, and why.** Trial → paid stays between 1.87% and 2.08% in every one of the 13 months. It doesn't move while visits, session length, data import (31–45%) and modeling (11–58%) all swing widely. I expected more users importing data to mean more users converting. It didn't.
 
-*Data notes:* revenue equals paid × $78,125 every month ($10M ARR ÷ 128), so it carries no separate signal. "Churned (1yr)" exceeds each month's new paid customers by 1.2–3.5x, so it counts the whole base, not a cohort. I did not use either column as evidence.
+**The biggest drop-off is at the Activation stage.** 98% of trials (6,296 of 6,424) never convert. The largest *absolute* loss is visit → trial (93% of visitors, an Acquisition problem). But ad money already buys plenty of trials, and they don't convert. The rate that matters is the 98%.
+
+**Did the data confirm or challenge your hypothesis?** ↻ Challenged it.
+
+**What the data told me.** The leak is where I thought: after sign-up. But my bet was wrong. When the share of users importing data rose from ~31% to ~45%, conversion stayed flat. Getting data in isn't enough. Users need a result they act on, and ideally one that someone else relies on.
+
+### Formalized hypothesis
+
+- **PROBLEM (X):** 98% of FinWise trials end without paying, and conversion holds at ~2% whatever happens to traffic or feature adoption.
+- **BECAUSE (Y):** a solo trial user can set FinWise up without ever producing a result another person depends on, so walking away at trial end costs them nothing.
+- **EXPERIMENT (Z):** after data import, prompt trial users to invite their accountant or bookkeeper to review an auto-generated 30-day cash forecast. A/B test on new trials. Primary metric: % of trials with an accepted accountant invite. Guardrail: data-import completion. Trial → paid tracked as the lagging outcome.
 
 ## The bet
 
-**Focus: a collaboration-to-referral hybrid loop at the end of activation.** Small-business finance is shared work between the owner, a bookkeeper, and an accountant. A user who brings their accountant in gains a reason to stay. That first step is Collaboration: the owner invites someone to do shared work. The accountant sits outside the company and serves many clients, so the loop's second step works like Referral: the accountant brings other businesses in. Plain referral loops ask users for a favour. This one makes the invite part of the job.
+**Which growth loop would you experiment with first?** Collaboration.
 
-**Why conversion before churn.** I'm treating 2% conversion and 60% churn as one problem, not two. Both come from users never reaching a result they depend on. Today some users pay before they get there, and those are the ones likely to leave. If the trial gets them to a shared, relied-on forecast first, we should convert more people *and* convert better people. A retention-first plan would polish the experience for the 128 customers who converted over the last 13 months, while the trial failed the other 6,296.
+**My reasoning.** Small-business finance is already shared work between the owner and their accountant or bookkeeper. A collaboration loop turns that existing relationship into the reason to stay, and each accountant can bring in other clients at no ad cost.
 
-**How I'll know it helps retention, not just conversion.** Secondary metric: 90-day paid retention, treatment vs control. Honest limit: at ~10 conversions per test the retention read is directional only. So I'll also track a leading signal: % of new paid accounts with an active outside collaborator at day 30. If the bet works, that number goes up and churn among those accounts goes down over the following two quarters.
-
-**What we're deliberately NOT doing.**
+**What I'm deliberately NOT doing.**
 - Not raising paid acquisition or optimizing visit → trial. At a fixed 2% conversion, more trials just scale the leak.
-- Not pushing more feature adoption (import, modeling) as the goal. Nothing in this data shows it moving conversion on its own.
-- Not running churn-only plays yet (win-back offers, annual-plan discounts). They treat the symptom. Module 3 covers engagement and retention mechanics; I'll revisit there.
-- Not building a referral-reward program yet. Incentives without a working Aha moment buy sign-ups that churn.
-
-**Biggest risk to this bet.** Many FinWise users may be solo owners with no outside accountant. If so, the invite step has no one to go to. Next check: the share of trial accounts with an accountant or bookkeeper.
+- Not pushing feature adoption (import, modeling) as the goal by itself. Nothing in this data shows it moving conversion.
+- Not running churn-only plays yet (win-back offers, annual-plan discounts). They treat the symptom; I'll revisit in Module 3.
+- Not building a referral-reward program. Incentives without a working Aha moment buy sign-ups that churn.
 
 ## Growth loop
 
@@ -75,8 +65,19 @@ flowchart LR
   N --> T
 ```
 
-1. **Trigger:** a business owner starts a trial and imports their books.
-2. **Stage 1:** FinWise generates a 30-day cash forecast worth sharing. This is the Aha moment defined in Module 2.
-3. **Stage 2:** the owner invites their accountant or bookkeeper to review it.
-4. **Stage 3:** the accountant works inside FinWise and sees value across their client list.
-5. **Outcome:** the owner converts because their workflow depends on the shared space. The accountant brings in other clients, restarting the loop with a bigger base and no ad spend.
+- **Trigger:** a business owner starts a trial and imports their books.
+- **Stage 1:** FinWise generates a 30-day cash forecast worth sharing. This is the Aha moment defined in Module 2.
+- **Stage 2:** the owner invites their accountant or bookkeeper to review it.
+- **Stage 3:** the accountant works inside FinWise and sees value across their client list.
+- **Outcome:** the owner converts because their workflow depends on the shared forecast. The accountant brings in other clients, restarting the loop with a bigger base and no ad spend.
+
+---
+
+## Notes (beyond the lab)
+
+- **Why trial → paid isn't the primary metric.** Detecting 2.0% → 2.5% needs ~13,800 trials per arm, about 56 months of FinWise traffic (~494 trials/month). The accepted-invite rate has a higher base rate: detecting 5% → 10% needs ~434 per arm, about 8 weeks. The 5% baseline is a guess to be measured. Whether accepted invites predict conversion must be checked with user-level data (Module 4). If either fails, Module 5 picks a non-A/B method. The same power problem applies to my Exercise 1 test.
+- **Dataset caveats.** Paid equals round(trials × 2%) in every row, so the flat conversion is built into the case data. Revenue equals paid × $78,125 every month, so it carries no separate signal. "Churned (1yr)" exceeds new paid customers in every month (317 vs 128), so it counts the whole base, not a cohort.
+- **Monthly averages can't show what individual users did.** Import and conversion not moving together across months doesn't prove import is irrelevant for any given user. Module 4's user-level data settles it.
+- **Is this really Collaboration?** The accountant sits outside the company. The first step (owner invites accountant) is Collaboration; the second (accountant brings other clients) works more like Referral.
+- **Conversion before churn.** I treat 2% conversion and 60% churn as one problem: users never reach a result they depend on. Retention check: 90-day paid retention, treatment vs control (directional at this scale), plus % of new paid accounts with an active outside collaborator at day 30.
+- **Biggest risk.** Many owners may have no outside accountant. Next check: the share of trial accounts with one.
