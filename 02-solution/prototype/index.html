@@ -21,7 +21,7 @@
 }}
 *{box-sizing:border-box;margin:0}
 body{background:var(--paper);color:var(--ink);font:400 16px/1.5 Geist,system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
-.num{font-family:"Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
 .shell{max-width:720px;margin:0 auto;padding:24px 16px 64px}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
@@ -115,7 +115,7 @@ textarea{min-height:96px;resize:vertical}
     <button class="choice" data-goal="spend" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v8l6 4"/></svg><span><b>Where is my money going?</b><small>Your top spending categories, sorted for you</small></span></button>
     <button class="choice" data-goal="tax" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span><b>Am I ready for quarterly taxes?</b><small>What you'll likely owe, and when</small></span></button>
   </div>
-  <div style="max-width:320px;margin-bottom:28px">
+  <div style="max-width:420px;margin-bottom:28px">
     <label class="f" for="biz">Your business</label>
     <select id="biz"><option>Services (landscaping, cleaning, trades)</option><option>Retail or e-commerce</option><option>Professional services</option><option>Restaurant or food</option></select>
   </div>
@@ -136,7 +136,7 @@ textarea{min-height:96px;resize:vertical}
   <p class="secure"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Read-only access. FinWise can never move money.</p>
   <div class="loading" id="loading" role="status" aria-live="polite">
     <ol>
-      <li><i></i>Connected to <span id="bankname">your bank</span></li>
+      <li><i></i>Connected: <span id="bankname">your bank</span></li>
       <li><i></i>Reading 90 days · 412 transactions</li>
       <li><i></i>Sorting payroll, rent, suppliers, and customer payments</li>
       <li><i></i>Projecting the next 30 days</li>
@@ -155,7 +155,7 @@ textarea{min-height:96px;resize:vertical}
     <div class="legend"><span>— Projected balance</span><span>- - Your $5,000 safety line</span></div>
   </div>
   <div class="flags">
-    <div class="flag warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><div><b>Payroll and rent land the same week.</b><p><span class="num">$9,860</span> leaves between Oct 25–28. Moving rent to the 1st keeps you above your safety line.</p></div></div>
+    <div class="flag warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><div><b>Payroll and rent land the same week.</b><p><span class="num">$9,860</span> leaves between Oct 24 and Oct 28. Moving rent to the 1st keeps you above your safety line.</p></div></div>
     <div class="flag ok"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Two customer invoices are due Nov 1.</b><p><span class="num">$7,400</span> from Greenway HOA and Palm Court Apts. Both have paid on time the last 3 months.</p></div></div>
   </div>
   <div class="row">
@@ -200,7 +200,7 @@ document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
 go1.onclick=()=>show(1);
 // 2
 document.querySelectorAll('.bank').forEach(b=>b.addEventListener('click',()=>{
-  document.getElementById('bankname').textContent=b.firstChild.textContent.trim();
+  const nm=b.firstChild.textContent.trim();document.getElementById('bankname').textContent=nm==='Use sample data'?'a demo business (Rivera Landscaping)':nm;
   document.getElementById('banks').style.display='none';
   const L=document.getElementById('loading');L.classList.add('on');
   const items=[...L.querySelectorAll('li')];items.forEach(li=>li.classList.remove('done'));
@@ -208,15 +208,13 @@ document.querySelectorAll('.bank').forEach(b=>b.addEventListener('click',()=>{
   setTimeout(()=>show(2),350+items.length*450+250);
 }));
 // 3 chart
-function series(){const start=11620,out=[],ev={6:-1800,9:-2400,12:3200,15:-1200,18:-5460,21:-4400,24:5100,27:2300,28:7400};let b=start;
-  for(let d=0;d<=30;d++){b+= (ev[d]||0) + (d%3===0?-420:180);out.push(Math.round(b));}
-  const minI=out.indexOf(Math.min(...out)); out[minI]=4180; out[30]=18240; return out;}
+function series(){return [11620,11800,11450,11900,12100,11300,10850,9400,9650,9900,9300,9550,10100,10600,11900,12400,12900,13500,14040,11640,9440,6200,4180,4600,5100,5600,6100,13500,14200,17100,18240];}
 function drawChart(){const s=series(),W=640,H=220,p={l:52,r:12,t:12,b:28},max=22000,min=0;
   const x=i=>p.l+i*(W-p.l-p.r)/30, y=v=>p.t+(1-(v-min)/(max-min))*(H-p.t-p.b);
   const pts=s.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
   const mi=s.indexOf(Math.min(...s)), area=`${p.l},${y(0)} ${pts} ${x(30)},${y(0)}`;
   let g='';[0,5000,10000,15000,20000].forEach(v=>{g+=`<line x1="${p.l}" x2="${W-p.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${p.l-8}" y="${y(v)+4}" text-anchor="end">${v/1000}k</text>`;});
-  [[0,'Oct 6'],[22,'Oct 28'],[30,'Nov 5']].forEach(([i,t])=>g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle">${t}</text>`);
+  [[0,'Oct 6','start'],[22,'Oct 28','middle'],[30,'Nov 5','end']].forEach(([i,t,a])=>g+=`<text x="${x(i)}" y="${H-8}" text-anchor="${a}">${t}</text>`);
   document.getElementById('chart').innerHTML=g+
    `<line x1="${p.l}" x2="${W-p.r}" y1="${y(5000)}" y2="${y(5000)}" stroke="var(--amber)" stroke-dasharray="5 5"/>`+
    `<polygon points="${area}" fill="var(--green-soft)" opacity=".7"/>`+
