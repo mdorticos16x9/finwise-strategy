@@ -7,51 +7,101 @@
 <meta name="description" content="Wireframe of FinWise's gamification mechanic: a forecast-confidence progress bar that fills as the owner confirms what's coming this week.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#f6f4ee;--card:#fffdf8;--ink:#14212b;--ink-2:#4a5862;--ink-3:#6b7780;--line:#e2ddd1;--green:#1f6b4f;--green-soft:#e3efe8;--amber:#a2560b;--amber-soft:#fbeedd;--focus:#2d6cdf;--shadow:0 1px 2px rgba(20,33,43,.06),0 8px 24px -12px rgba(20,33,43,.18)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#11181d;--card:#172028;--ink:#eef1ee;--ink-2:#b4bec4;--ink-3:#8d989f;--line:#2a353d;--green:#5fc59a;--green-soft:#183429;--amber:#f0a65a;--amber-soft:#3a2914;--focus:#7aa7ff;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6)}}
+:root{--paper:#f6f4ee;--card:#fffdf8;--ink:#14212b;--ink-2:#4a5862;--ink-3:#6b7780;--line:#e2ddd1;--line-2:#efebe2;--green:#1f6b4f;--green-soft:#e3efe8;--amber:#a2560b;--amber-soft:#fbeedd;--focus:#2d6cdf;--shadow:0 1px 2px rgba(20,33,43,.06),0 10px 30px -14px rgba(20,33,43,.22);--ease:cubic-bezier(.16,1,.3,1)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#11181d;--card:#172028;--ink:#eef1ee;--ink-2:#b4bec4;--ink-3:#8d989f;--line:#2a353d;--line-2:#1f2930;--green:#5fc59a;--green-soft:#183429;--amber:#f0a65a;--amber-soft:#3a2914;--focus:#7aa7ff;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px -14px rgba(0,0,0,.7)}}
 *{box-sizing:border-box;margin:0}
-body{background:var(--paper);color:var(--ink);font:400 16px/1.5 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.5 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .num{font-variant-numeric:tabular-nums;font-weight:600}
-.shell{max-width:720px;margin:0 auto;padding:24px 16px 64px}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700}
-.brand svg{width:26px;height:26px}
+.mono{font-family:"Geist Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.shell{max-width:1120px;margin:0 auto;padding:28px clamp(16px,4vw,48px) 56px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.brand svg{width:28px;height:28px}
 .meta{font-size:13px;color:var(--ink-3)}
-.label{font-size:13px;color:var(--ink-3);margin-bottom:8px}
-h1{font-size:clamp(26px,5vw,34px);line-height:1.15;letter-spacing:-.025em;font-weight:600;text-wrap:balance;margin-bottom:10px}
-.lede{color:var(--ink-2);max-width:58ch;margin-bottom:24px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px}
-.conf-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.conf-top b{font-size:15px}
-.pct{font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.bar{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
-.fill{height:100%;width:0;background:var(--green);border-radius:7px;transition:width .6s cubic-bezier(.16,1,.3,1)}
+
+/* trigger notification */
+.notif{display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:32px;max-width:560px;animation:drop .8s var(--ease) .2s both}
+.notif .ic{flex:none;width:38px;height:38px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
+.notif .ic svg{width:20px;height:20px}
+.notif b{display:block;font-size:15px}
+.notif small{font-size:14px;color:var(--ink-3)}
+.notif .when{margin-left:auto;font-size:12px;color:var(--ink-3);white-space:nowrap;align-self:flex-start}
+@keyframes drop{from{opacity:0;transform:translateY(-18px) scale(.97)}to{opacity:1;transform:none}}
+
+h1{font-size:clamp(28px,4.2vw,42px);line-height:1.08;letter-spacing:-.035em;font-weight:600;text-wrap:balance;margin-bottom:12px;max-width:22ch}
+.lede{color:var(--ink-2);max-width:58ch;margin-bottom:32px;font-size:17px}
+.grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}
+
+/* confidence */
+.conf-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:14px}
+.conf-top b{font-size:16px;display:block}
+.conf-top small{font-size:13px;color:var(--ink-3)}
+.pct{font:600 52px/1 "Geist Mono",monospace;letter-spacing:-.05em;font-variant-numeric:tabular-nums;transition:color .5s}
+.pct.full{color:var(--green)}
+.bar{position:relative;height:14px;border-radius:7px;background:var(--line-2);overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;width:60%;border-radius:7px;background:var(--ink);transition:width .9s var(--ease),background .5s}
+.fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-100%);animation:shine 2.6s ease-in-out infinite}
+@keyframes shine{60%,100%{transform:translateX(100%)}}
+.bar.full .fill{background:var(--green)}
+.ticks{position:absolute;inset:0;display:flex;pointer-events:none}
+.ticks i{flex:1;border-right:2px solid var(--card)}
+.ticks i:last-child{border:0}
 .steps{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:8px}
-.low{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;margin-top:16px;background:var(--amber-soft)}
+.steps span{transition:color .4s,font-weight .4s}
+.steps span.on{color:var(--ink);font-weight:600}
+
+.chart{margin:26px -6px 8px;width:calc(100% + 12px);height:auto;display:block;overflow:visible}
+.chart .ax{font:11px "Geist Mono",monospace;fill:var(--ink-3)}
+.chart .lowlbl{font:600 12px "Geist Mono",monospace}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--ink-3)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:18px;height:10px;border-radius:3px;background:color-mix(in srgb,var(--amber) 25%,transparent)}
+.legend i.l{height:0;border-radius:0;background:none;border-top:2.5px solid var(--green)}
+
+.low{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:14px;margin-top:18px;background:var(--amber-soft);transition:background .6s var(--ease)}
 .low.ok{background:var(--green-soft)}
 .low svg{flex:none;width:20px;height:20px;margin-top:2px;stroke:var(--amber)}
 .low.ok svg{stroke:var(--green)}
 .low p{font-size:15px;color:var(--ink-2)}
 .low b{color:var(--ink)}
-h2{font-size:17px;letter-spacing:-.01em;margin:4px 0 12px}
+
+/* checklist */
+.todo h2{font-size:18px;letter-spacing:-.01em;margin-bottom:4px}
+.todo .sub{font-size:14px;color:var(--ink-3);margin-bottom:16px}
 .items{display:grid;gap:10px}
-.item{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:inherit;font:inherit;cursor:pointer;transition:border-color .2s}
-.item:hover{border-color:var(--ink-3)}
-.item .box{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid var(--ink-3);display:grid;place-items:center}
-.item[aria-pressed="true"] .box{background:var(--green);border-color:var(--green)}
-.item[aria-pressed="true"] .box svg{display:block}
-.box svg{display:none;width:14px;height:14px;stroke:#fff}
-.item .t{flex:1}
-.item .t b{display:block;font-weight:600}
-.item .t small{color:var(--ink-3);font-size:14px}
-.item .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-.item .pts{font-size:12px;color:var(--green);font-weight:600;white-space:nowrap}
-.done{display:none;margin-top:16px;padding:16px;border-radius:12px;background:var(--green-soft)}
-.done.on{display:block}
-:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.note{font-size:13px;color:var(--ink-3);margin-top:36px;border-top:1px solid var(--line);padding-top:14px;max-width:64ch}
+.item{position:relative;display:grid;grid-template-columns:24px 1fr auto;gap:14px;align-items:center;width:100%;text-align:left;padding:15px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card);cursor:pointer;transition:border-color .25s,background .4s var(--ease),transform .3s var(--ease)}
+.item:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+.item:active{transform:scale(.99)}
+.item .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--ink-3);display:grid;place-items:center;transition:all .35s var(--ease)}
+.box svg{width:14px;height:14px;stroke:#fff;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .4s var(--ease) .05s}
+.item[aria-pressed="true"]{background:var(--green-soft);border-color:transparent}
+.item[aria-pressed="true"] .box{background:var(--green);border-color:var(--green);transform:scale(1.06)}
+.item[aria-pressed="true"] .box svg{stroke-dashoffset:0}
+.item .t b{display:block;font-weight:600;font-size:15px}
+.item .t small{color:var(--ink-3);font-size:13px}
+.item .r{text-align:right}
+.item .amt{display:block;font:500 14px "Geist Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+.item .amt.in{color:var(--green)}
+.item .pts{display:inline-block;margin-top:2px;font-size:12px;font-weight:600;color:var(--green);white-space:nowrap}
+.fly{position:fixed;z-index:20;pointer-events:none;font:600 14px "Geist Mono",monospace;color:#fff;background:var(--green);padding:4px 10px;border-radius:99px;box-shadow:0 8px 20px -8px rgba(0,0,0,.4)}
+.done{display:none;margin-top:16px;padding:18px;border-radius:14px;background:var(--green-soft)}
+.done.on{display:block;animation:rise .6s var(--ease) both}
+.done p{color:var(--ink-2);font-size:15px}
+.done b{color:var(--ink)}
+.next{display:none;margin-top:12px;font-size:14px;color:var(--ink-3);align-items:center;gap:10px}
+.next.on{display:flex;animation:rise .6s var(--ease) .25s both}
+.next svg{width:18px;height:18px;stroke:var(--ink-3)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.note{font-size:13px;color:var(--ink-3);margin-top:48px;border-top:1px solid var(--line);padding-top:14px;max-width:64ch}
+.note a{color:inherit}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+@media (max-width:560px){.pct{font-size:42px}.card{padding:18px}.notif .when{display:none}.item{grid-template-columns:22px 1fr auto;gap:12px;padding:14px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}.fill::after{display:none}}
 </style>
 </head>
 <body>
@@ -61,37 +111,79 @@ h2{font-size:17px;letter-spacing:-.01em;margin:4px 0 12px}
   <div class="meta">Rivera Landscaping LLC · Mon, Oct 19</div>
 </header>
 
-<p class="label">Weekly cash check · 4 items to confirm</p>
+<div class="notif" role="note" aria-label="Monday reminder">
+  <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="var(--paper)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
+  <span><b>Payroll week. 4 items to confirm.</b><small>Your forecast is 60% confident right now.</small></span>
+  <span class="when">8:02 AM</span>
+</div>
+
 <h1>Confirm what's coming, and your forecast gets sharper.</h1>
 <p class="lede">Each thing you confirm makes the next 30 days more accurate. Payroll week is coming up.</p>
 
+<div class="grid">
 <section class="card" aria-labelledby="conf">
-  <div class="conf-top"><b id="conf">Forecast confidence</b><span class="pct" id="pct">60%</span></div>
-  <div class="bar" role="progressbar" aria-labelledby="conf" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><div class="fill" id="fill"></div></div>
-  <div class="steps"><span>Rough guess</span><span>Good</span><span>Confirmed</span></div>
+  <div class="conf-top"><span><b id="conf">Forecast confidence</b><small id="confsub">Based partly on guesses</small></span><span class="pct" id="pct">60%</span></div>
+  <div class="bar" id="bar" role="progressbar" aria-labelledby="conf" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><div class="fill" id="fill"></div><div class="ticks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="steps" id="steps"><span>Rough guess</span><span class="on">Good</span><span>Confirmed</span></div>
+  <svg class="chart" id="chart" viewBox="0 0 640 230" role="img" aria-label="Projected cash balance for the next 30 days with a range that narrows as items are confirmed. Lowest point 4,180 dollars on October 28."></svg>
+  <div class="legend"><span><i class="l"></i>Projected balance</span><span><i></i>Range it could land in</span></div>
   <div class="low" id="low"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><p id="lowtxt"><b>Lowest point: $4,180 on Oct 28.</b> Based partly on guesses. Confirm the items below to firm it up.</p></div>
 </section>
 
-<section class="card" aria-labelledby="todo">
+<section class="card todo" aria-labelledby="todo">
   <h2 id="todo">This week</h2>
+  <p class="sub">Tap each one that's right. Each adds 10%.</p>
   <div class="items">
-    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Payroll, Oct 24</b><small>Same as the last 3 cycles?</small></span><span class="amt">−$6,420</span><span class="pts">+10%</span></button>
-    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Rent, Oct 28</b><small>Recurring monthly</small></span><span class="amt">−$3,440</span><span class="pts">+10%</span></button>
-    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Greenway HOA invoice, due Nov 1</b><small>Paid on time the last 3 months</small></span><span class="amt">+$4,200</span><span class="pts">+10%</span></button>
-    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Ask Maria (your accountant) to review</b><small>She sees the same forecast and can leave notes</small></span><span class="amt"></span><span class="pts">+10%</span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Payroll, Oct 24</b><small>Same as the last 3 cycles?</small></span><span class="r"><span class="amt">−$6,420</span><span class="pts">+10%</span></span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Rent, Oct 28</b><small>Recurring monthly</small></span><span class="r"><span class="amt">−$3,440</span><span class="pts">+10%</span></span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Greenway HOA invoice, due Nov 1</b><small>Paid on time the last 3 months</small></span><span class="r"><span class="amt in">+$4,200</span><span class="pts">+10%</span></span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Ask Maria (your accountant) to review</b><small>She sees the same forecast and can leave notes</small></span><span class="r"><span class="pts">+10%</span></span></button>
   </div>
-  <div class="done" id="done" role="status" aria-live="polite"><b>Forecast confirmed for payroll week.</b> We'll bring next week's items on Monday. Confidence slips if they go unchecked, so your number never goes quietly stale.</div>
+  <div class="done" id="done" role="status" aria-live="polite"><p><b>Forecast confirmed for payroll week.</b> We'll bring next week's items on Monday. Confidence slips if they go unchecked, so your number never goes quietly stale.</p></div>
+  <p class="next" id="next"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Next check: Mon, Oct 26. Payroll and rent come pre-filled from this week.</p>
 </section>
+</div>
 
-<p class="note">Wireframe for Product School · Product Analytics &amp; Experimentation, Module 3. FinWise and all data shown are fictional. Click the items to confirm them.</p>
+<p class="note">Wireframe for Product School · Product Analytics &amp; Experimentation, Module 3. FinWise and all data shown are fictional. Click the items to confirm them. <a href="#" id="reset">Reset</a></p>
 </div>
 <script>
-let pct=60; const fill=document.getElementById('fill'), pctEl=document.getElementById('pct'), bar=document.querySelector('.bar'), low=document.getElementById('low'), lowtxt=document.getElementById('lowtxt');
-function render(){fill.style.width=pct+'%'; pctEl.textContent=pct+'%'; bar.setAttribute('aria-valuenow',pct);
-  if(pct>=100){low.classList.add('ok'); lowtxt.innerHTML='<b>Lowest point: $4,180 on Oct 28, confirmed.</b> Every item behind this number is checked. Moving rent to Nov 1 keeps you above your $5,000 safety line.'; document.getElementById('done').classList.add('on');}
-  else {low.classList.remove('ok'); lowtxt.innerHTML='<b>Lowest point: $4,180 on Oct 28.</b> Based partly on guesses. Confirm the items below to firm it up.'; document.getElementById('done').classList.remove('on');}}
-document.querySelectorAll('.item').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')==='true'; b.setAttribute('aria-pressed',String(!on)); pct+= (on?-1:1)*Number(b.dataset.pts); render();}));
-requestAnimationFrame(render);
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,$=id=>document.getElementById(id);
+const fmt=v=>'$'+Math.round(v).toLocaleString('en-US'),day=i=>new Date(2026,9,6+i).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const S=[11620,11800,11450,11900,12100,11300,10850,9400,9650,9900,9300,9550,10100,10600,11900,12400,12900,13500,14040,11640,9440,6200,4180,4600,5100,5600,6100,13500,14200,17100,18240];
+let W=640;const H=230,P={l:46,r:14,t:14,b:28},MAX=24000,X=i=>P.l+i*(W-P.l-P.r)/30,Y=v=>P.t+(1-Math.max(0,v)/MAX)*(H-P.t-P.b),MI=22;
+let pct=60,shown=60;
+// uncertainty grows with days ahead and shrinks with confidence
+const spread=(i,c)=>(1-c/100)*(1800+i*230);
+function chart(c){const sv=$('chart');W=Math.round(Math.max(320,Math.min(640,sv.parentNode.clientWidth-36||640)));sv.setAttribute('viewBox',`0 0 ${W} ${H}`);const up=S.map((v,i)=>v+spread(i,c)),dn=S.map((v,i)=>v-spread(i,c)),full=c>=100,lc=full?'var(--green)':'var(--amber)';
+  let g='';[0,5000,10000,15000,20000].forEach(v=>g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text class="ax" x="${P.l-10}" y="${Y(v)+4}" text-anchor="end">${v/1000}k</text>`);
+  (W<480?[[0,'start'],[14,'middle'],[22,'middle'],[30,'end']]:[[0,'start'],[7,'middle'],[14,'middle'],[22,'middle'],[30,'end']]).forEach(([i,a])=>g+=`<text class="ax" x="${X(i)}" y="${H-6}" text-anchor="${a}">${day(i)}</text>`);
+  g+=`<path d="${up.map((v,i)=>(i?'L':'M')+X(i)+','+Y(v)).join('')}${dn.map((v,i)=>'L'+X(30-i)+','+Y(dn[30-i])).join('')}Z" fill="var(--amber)" opacity="${.18*(1-c/100)/.4}"/>`;
+  g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(5000)}" y2="${Y(5000)}" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 5"/>`;
+  g+=`<path d="${S.map((v,i)=>(i?'L':'M')+X(i)+','+Y(v)).join('')}" fill="none" stroke="var(--green)" stroke-width="2.75" stroke-linejoin="round" stroke-linecap="round"/>`;
+  const lx=X(MI),ly=Y(S[MI]),lo=Math.round(dn[MI]/10)*10,hi=Math.round(up[MI]/10)*10;
+  g+=`<line x1="${lx}" x2="${lx}" y1="${Y(up[MI])}" y2="${Y(dn[MI])}" stroke="${lc}" stroke-width="2" opacity="${full?0:.6}"/>`;
+  g+=`<circle cx="${lx}" cy="${ly}" r="6" fill="${lc}" stroke="var(--card)" stroke-width="2.5"/>`;
+  g+=`<text class="lowlbl" x="${lx}" y="${Math.min(H-34,Y(dn[MI])+20)}" text-anchor="middle" fill="${lc}">${full?'Low '+fmt(S[MI])+' · confirmed':''}</text>`;
+  $('chart').innerHTML=g;}
+function animateTo(target){const from=shown,T0=performance.now(),D=RM?1:900;
+  (function f(now){const p=Math.min(1,(now-T0)/D),e=1-Math.pow(1-p,3);shown=from+(target-from)*e;$('pct').textContent=Math.round(shown)+'%';chart(shown);if(p<1)requestAnimationFrame(f);})(T0);}
+function render(){
+  $('fill').style.width=pct+'%';$('bar').setAttribute('aria-valuenow',pct);const full=pct>=100;
+  $('bar').classList.toggle('full',full);$('pct').classList.toggle('full',full);
+  const st=[...$('steps').children];st.forEach((s,i)=>s.classList.toggle('on',i===(pct>=100?2:pct>=60?1:0)));
+  $('confsub').textContent=full?'Every item behind this number is checked':pct>=80?'Almost there':'Based partly on guesses';
+  if(full){$('low').classList.add('ok');$('lowtxt').innerHTML='<b>Lowest point: $4,180 on Oct 28, confirmed.</b> Every item behind this number is checked. Moving rent to Nov 1 keeps you above your $5,000 safety line.';}
+  else{$('low').classList.remove('ok');$('lowtxt').innerHTML='<b>Lowest point: $4,180 on Oct 28.</b> Based partly on guesses: it could land anywhere from '+fmt(Math.max(0,Math.round((4180-spread(22,pct))/10)*10))+' to '+fmt(Math.round((4180+spread(22,pct))/10)*10)+'. Confirm the items below to firm it up.';}
+  $('done').classList.toggle('on',full);$('next').classList.toggle('on',full);animateTo(pct);}
+function fly(from){if(RM)return;const a=from.getBoundingClientRect(),b=$('pct').getBoundingClientRect(),el=document.createElement('span');
+  el.className='fly';el.textContent='+10%';document.body.appendChild(el);el.style.left=a.left+'px';el.style.top=a.top+'px';
+  const dx=b.left+b.width/2-a.left-24,dy=b.top-a.top;
+  el.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx*.5}px,${dy*.5-60}px) scale(1.1)`,opacity:1,offset:.5},{transform:`translate(${dx}px,${dy}px) scale(.6)`,opacity:0}],{duration:800,easing:'cubic-bezier(.5,0,.3,1)'}).onfinish=()=>el.remove();}
+document.querySelectorAll('.item').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')==='true';b.setAttribute('aria-pressed',String(!on));
+  if(!on)fly(b.querySelector('.pts'));pct+=(on?-1:1)*Number(b.dataset.pts);render();}));
+$('reset').onclick=e=>{e.preventDefault();document.querySelectorAll('.item').forEach(b=>b.setAttribute('aria-pressed','false'));pct=60;render();};
+chart(60);render();
+addEventListener('resize',()=>chart(shown));
 </script>
 </body>
 </html>
