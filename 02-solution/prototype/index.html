@@ -338,7 +338,7 @@ input[type=email][aria-invalid="true"]{border-color:var(--amber)}
     <div class="legend"><span><i></i>Projected balance</span><span><i class="s"></i>Your $5,000 safety line</span><span class="hint">Drag across the chart to read any day</span></div>
   </div>
   <div class="flags">
-    <div class="flag warn enter" id="warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><div class="body"><b>Payroll and rent land the same week.</b><p><span class="num">$9,860</span> leaves between Oct 24 and Oct 28. Moving rent to the 1st keeps you above your safety line.</p>
+    <div class="flag warn enter" id="warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><div class="body"><b>Payroll and rent land the same week.</b><p><span class="num">$9,860</span> leaves between Oct 23 and Oct 28. Moving rent to the 1st keeps you above your safety line.</p>
       <div class="whatif"><button class="switch" id="whatif" role="switch" aria-checked="false" aria-labelledby="whatifL"></button><label id="whatifL" for="whatif">Try it: move rent to Nov 1</label><p class="res" id="whatifR" aria-live="polite"></p></div></div></div>
     <div class="flag ok enter"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div class="body"><b>Two customer invoices are due Nov 1.</b><p><span class="num">$7,400</span> from Greenway HOA and Palm Court Apts. Both have paid on time the last 3 months.</p></div></div>
   </div>
@@ -427,8 +427,8 @@ function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');c
 /* ---------- 1 · personalize ---------- */
 const ANS={
  cash:{h:"You're covered next month, with one tight week.",q:"Will I have enough cash next month?",b:null},
- spend:{h:"Payroll and rent are your biggest costs, and they land the same week.",q:"Where is my money going?",b:'Your top costs: payroll <span class="num">$6,420</span>, rent <span class="num">$3,440</span>, supplies <span class="num">$1,180</span>. Because payroll and rent both leave between Oct 24 and Oct 28, your balance dips to <span class="num">$4,180</span> on <span class="num">Oct 28</span>.'},
- tax:{h:"Your Q4 tax estimate is about $3,900, due Jan 15.",q:"Am I ready for quarterly taxes?",b:'Set aside about <span class="num">$1,300</span> a month. Your tightest week is Oct 24–28 (low of <span class="num">$4,180</span>), so start setting money aside after the Nov 1 invoices clear.'}};
+ spend:{h:"Payroll and rent are your biggest costs, and they land the same week.",q:"Where is my money going?",b:'Your top costs: payroll <span class="num">$6,420</span>, rent <span class="num">$3,440</span>, supplies <span class="num">$1,180</span>. Because payroll and rent both leave between Oct 23 and Oct 28, your balance dips to <span class="num">$4,180</span> on <span class="num">Oct 28</span>.'},
+ tax:{h:"Your Q4 tax estimate is about $3,900, due Jan 15.",q:"Am I ready for quarterly taxes?",b:'Set aside about <span class="num">$1,300</span> a month. Your tightest week is Oct 23–28 (low of <span class="num">$4,180</span>), so start setting money aside after the Nov 1 invoices clear.'}};
 let goal='cash'; const big0=$('big3').innerHTML;
 document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
   document.querySelectorAll('.choice').forEach(o=>o.setAttribute('aria-pressed','false'));
@@ -475,7 +475,7 @@ document.querySelectorAll('.bank').forEach(b=>b.addEventListener('click',()=>{
 }));
 
 /* ---------- 3 · forecast chart ---------- */
-const BASE=[11620,11800,11450,11900,12100,11300,10850,9400,9650,9900,9300,9550,10100,10600,11900,12400,12900,13500,14040,11640,9440,6200,4180,4600,5100,5600,6100,13500,14200,17100,18240];
+const BASE=[11620,11800,11450,11900,12100,11300,10850,9400,9650,9900,9300,9550,10100,10600,11900,12400,12900,14040,11640,9440,7800,6200,4180,4600,5100,5600,6100,13500,14200,17100,18240];
 const MOVED=BASE.map((v,i)=>i>=22&&i<=25?v+3440:v);
 let cur=BASE.slice(), hover=null, moved=false;
 let W=640;const H=250,P={l:46,r:14,t:30,b:28},MAX=22000;

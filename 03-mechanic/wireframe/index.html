@@ -134,7 +134,7 @@ h1{font-size:clamp(28px,4.2vw,42px);line-height:1.08;letter-spacing:-.035em;font
   <h2 id="todo">This week</h2>
   <p class="sub">Tap each one that's right. Each adds 10%.</p>
   <div class="items">
-    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Payroll, Oct 24</b><small>Same as the last 3 cycles?</small></span><span class="r"><span class="amt">−$6,420</span><span class="pts">+10%</span></span></button>
+    <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Payroll, Oct 23</b><small>Same as the last 3 cycles?</small></span><span class="r"><span class="amt">−$6,420</span><span class="pts">+10%</span></span></button>
     <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Rent, Oct 28</b><small>Recurring monthly</small></span><span class="r"><span class="amt">−$3,440</span><span class="pts">+10%</span></span></button>
     <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Greenway HOA invoice, due Nov 1</b><small>Paid on time the last 3 months</small></span><span class="r"><span class="amt in">+$4,200</span><span class="pts">+10%</span></span></button>
     <button class="item" aria-pressed="false" data-pts="10"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg></span><span class="t"><b>Ask Maria (your accountant) to review</b><small>She sees the same forecast and can leave notes</small></span><span class="r"><span class="pts">+10%</span></span></button>
@@ -149,7 +149,7 @@ h1{font-size:clamp(28px,4.2vw,42px);line-height:1.08;letter-spacing:-.035em;font
 <script>
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,$=id=>document.getElementById(id);
 const fmt=v=>'$'+Math.round(v).toLocaleString('en-US'),day=i=>new Date(2026,9,6+i).toLocaleDateString('en-US',{month:'short',day:'numeric'});
-const S=[11620,11800,11450,11900,12100,11300,10850,9400,9650,9900,9300,9550,10100,10600,11900,12400,12900,13500,14040,11640,9440,6200,4180,4600,5100,5600,6100,13500,14200,17100,18240];
+const S=[11620,11800,11450,11900,12100,11300,10850,9400,9650,9900,9300,9550,10100,10600,11900,12400,12900,14040,11640,9440,7800,6200,4180,4600,5100,5600,6100,13500,14200,17100,18240];
 let W=640;const H=230,P={l:46,r:14,t:14,b:28},MAX=24000,X=i=>P.l+i*(W-P.l-P.r)/30,Y=v=>P.t+(1-Math.max(0,v)/MAX)*(H-P.t-P.b),MI=22;
 let pct=60,shown=60;
 // uncertainty grows with days ahead and shrinks with confidence

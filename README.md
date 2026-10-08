@@ -23,16 +23,16 @@
 
 ### Slide 8 · The Signals (Metrics)
 - **Leading:** 1) % of new trials that reach a first forecast built from their own imported data in week 1: one step before the North Star, at the Activation drop-off, and it responds within days of an onboarding change.
-2) Sessions per trial user in the first 14 days: the usage signal that moves most with trial-to-paid (+0.41); the weekly cash check from Module 3 is built to raise it.
+2) Average session length per trial user in the first 14 days: depth is the habit signal; churn rose as sessions got shorter (r = −0.37), and the weekly cash check is built to make each visit deeper.
 - **Lagging:** Trial-to-paid conversion rate
-- **Pattern:** The headline metric is trial-to-paid, flat at 2%, but the real pattern behind it is a Ceiling: modeling usage swung from 11% to 58% (r = +0.24 with conversion) and conversion didn't move. More feature adoption alone won't break it. Users now visit more often for shorter sessions, so the next experiment has to change the experience itself: the weekly forecast check and the accountant invite, not more onboarding tweaks.
+- **Pattern:** The headline metric is trial-to-paid, flat at 2%, but the real pattern behind it is a Ceiling: modeling usage swung from 11% to 58% and conversion didn't move: it's pinned at about 2%, roughly 10 paid trials a month, so no usage metric truly moves it, and its 1.87–2.08% wiggle is rounding, not signal. More feature adoption alone won't break it. Users now visit more often for shorter sessions, so the next experiment has to change the experience itself: the weekly forecast check and the accountant invite, not more onboarding tweaks.
 
 ### Slide 9 · The Validation (Experiment)
 - **Method:** A/B test: new trials split 50/50 at sign-up, no network effect, and about 7 weeks gives a clean read.
 - **Hypothesis + metric:** If we replace today's set-up-first onboarding with the 3-screen forecast-first flow from Module 2 for FinWise trial users, we expect the share of trials that reach a first forecast in week 1 to rise from about 37% to at least 47%, because importing data alone hasn't moved conversion and the payoff is the modeling output.
 
-Primary metric: share of new trials reaching a first forecast from their own imported data within 7 days. Success: +10 points (37% → 47%) at p < 0.05, the minimum detectable effect at about 380 trials per arm.
-- **Guardrail + read date:** Guardrail: day-1 drop-off must not rise more than 5 points versus control. Read date: Monday, Dec 21, 2026 (launch Oct 26), no peeking.
+Primary metric: share of new trials reaching a first forecast from their own imported data within 7 days. Success: +10 points (about 37% → 47%; the 37% is an estimate, measured for real before launch) at p < 0.05, the minimum detectable effect at about 380 trials per arm.
+- **Guardrail + read date:** Guardrail: day-1 drop-off must not rise more than 5 points versus control (the test can only reliably see about 9, so 5–9 is a warning). Read date: Monday, Dec 21, 2026 (launch Oct 26), no peeking.
 
 ### Slide 10 · The Model (Pricing)
 - **Stage + model:** Stage 1 Value Creation · Subscription
@@ -42,7 +42,7 @@ The pricing bet: packaging matched to value. The paid line sits at the live fore
 - **Signal:** Upgrades should cluster at trial end among owners who reached a first forecast in week 1, and stay low among those who never did.
 
 ### Slide 11 · The Story (Insights)
-- **Friction:** The data kept refusing my first ideas. I was sure getting owners to import their data on day one would lift conversion; imports rose from 31% to 45% and conversion didn't move. I also had to separate what the numbers show from what they can prove: 13 monthly rows can point the way, not settle it.
+- **Friction:** The data kept refusing my first ideas. I was sure getting owners to import their data on day one would lift conversion; imports climbed back from 31% to 45% after an early-2024 dip, and conversion didn't move. I also had to separate what the numbers show from what they can prove: 13 monthly rows can point the way, not settle it.
 - **Aha moment:** Trial-to-paid isn't a lever, it's a ceiling. Modeling usage swung from 11% to 58% and conversion stayed at 2%. That changed the whole strategy: the fix isn't more onboarding tweaks or a price change, it's a new experience, a first forecast that owners build on every week and share with their accountant.
 - **Takeaways:** Pick the metric the test can actually read: size the sample before you pick the target. Set the read date before launch. Diagnose before you design, the churn data ruled out the streak I'd have built by default. And know when not to touch the price.
 
