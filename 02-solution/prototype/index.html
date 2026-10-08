@@ -183,6 +183,42 @@ h1:focus{outline:none}
 .whatif label{font-weight:600;font-size:15px;cursor:pointer}
 .whatif .res{flex-basis:100%;font-size:14px;color:var(--ink-2);min-height:21px}
 
+/* goal switch + goal visuals */
+.qrow{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.qrow .q{margin:0}
+.qswitch{display:inline-flex;padding:3px;border-radius:10px;background:var(--line-2);gap:2px}
+.qswitch button{border:0;background:transparent;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:500;color:var(--ink-3);cursor:pointer;transition:background .25s,color .25s}
+.qswitch button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(20,33,43,.12)}
+.gviz{margin:22px 0 6px}
+.gviz[hidden],.chartttl[hidden]{display:none}
+.chartttl{font-size:13px;color:var(--ink-3);margin-top:22px;margin-bottom:-14px}
+.bills{display:grid;gap:12px}
+.bill{display:grid;grid-template-columns:90px minmax(0,1fr) 78px 64px;gap:12px;align-items:center;font-size:14px}
+.bill .nm{font-weight:600}
+.bill .tr{height:12px;border-radius:6px;background:var(--line-2);overflow:hidden}
+.bill .tr i{display:block;height:100%;width:0;border-radius:6px;transition:width 1s var(--ease)}
+.bill .am{font:600 14px "Geist Mono",monospace;text-align:right;font-variant-numeric:tabular-nums}
+.bill .wh{font-size:12px;color:var(--ink-3);text-align:right}
+.strip{position:relative;height:56px;margin-top:22px;border-top:1px solid var(--line)}
+.strip .wk{position:absolute;top:0;height:34px;border-radius:0 0 8px 8px;background:var(--amber-soft);opacity:0;transition:opacity .6s var(--ease) .6s}
+.strip .wk span{position:absolute;left:8px;top:8px;font-size:12px;font-weight:600;color:var(--amber);white-space:nowrap}
+.strip .pin{position:absolute;top:-6px;width:12px;height:12px;margin-left:-6px;border-radius:50%;border:2px solid var(--card);transform:scale(0);transition:transform .5s var(--ease)}
+.strip .tk{position:absolute;bottom:0;font:11px "Geist Mono",monospace;color:var(--ink-3);transform:translateX(-50%);white-space:nowrap}
+.strip .tk:first-of-type{transform:none}.strip .tk:last-of-type{transform:translateX(-100%)}
+.gviz.in .wk{opacity:1}.gviz.in .pin{transform:scale(1)}
+.tax{display:grid;gap:14px}
+.tax .goalrow{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--ink-3)}
+.tax .goalrow b{font:600 22px "Geist Mono",monospace;color:var(--ink);letter-spacing:-.03em}
+.tax .track{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tax .blk{height:44px;border-radius:10px;background:var(--line-2);position:relative;overflow:hidden}
+.tax .blk i{position:absolute;inset:0;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.tax .blk>span{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:13px;font-weight:600;color:var(--ink);z-index:1;transition:color .4s}
+.tax .blk.on>span{color:#fff}
+.tax .hold{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--ink-2);padding:10px 12px;border-radius:10px;background:var(--amber-soft)}
+.tax .hold svg{flex:none;width:16px;height:16px;stroke:var(--amber)}
+.legend i.b{height:10px;border:0;border-radius:3px;background:color-mix(in srgb,var(--amber) 22%,transparent)}
+@media (max-width:600px){.bill{grid-template-columns:70px minmax(0,1fr) 70px}.bill .wh{display:none}.qswitch button{padding:6px 8px}}
+
 /* ---------- 4 · share ---------- */
 .sharegrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:28px;align-items:start}
 label.f{display:block;font-size:14px;font-weight:500;color:var(--ink-2);margin-bottom:8px}
@@ -330,12 +366,15 @@ input[type=email][aria-invalid="true"]{border-color:var(--amber)}
 <section class="screen" id="s3" aria-labelledby="h3a">
   <h1 id="h3a" class="enter">You're covered next month, with one tight week.</h1>
   <div class="answer enter">
-    <p class="q" id="q3">Will I have enough cash next month? · Rivera Landscaping LLC</p>
+    <div class="qrow"><p class="q" id="q3">Will I have enough cash next month? · Rivera Landscaping LLC</p>
+      <div class="qswitch" role="group" aria-label="Answer a different question"><button data-g="cash" aria-pressed="true">Cash</button><button data-g="spend" aria-pressed="false">Spending</button><button data-g="tax" aria-pressed="false">Taxes</button></div></div>
     <p class="big" id="big3">Your balance should stay positive. It dips to <span class="num">$4,180</span> on <span class="num">Oct 28</span>, then recovers to <span class="num">$18,240</span> by <span class="num">Nov 5</span>.</p>
+    <div class="gviz" id="gviz" hidden></div>
+    <p class="chartttl" id="chartttl" hidden>Your next 30 days</p>
     <div class="chartwrap">
       <svg class="chart" id="chart" viewBox="0 0 640 250" tabindex="0" role="slider" aria-label="Projected daily cash balance for the next 30 days. Use arrow keys to read each day." aria-valuemin="0" aria-valuemax="30" aria-valuenow="22" aria-valuetext="Oct 28: $4,180, lowest point"></svg>
     </div>
-    <div class="legend"><span><i></i>Projected balance</span><span><i class="s"></i>Your $5,000 safety line</span><span class="hint">Drag across the chart to read any day</span></div>
+    <div class="legend"><span><i></i>Projected balance</span><span><i class="b"></i>Likely range</span><span><i class="s"></i>Your $5,000 safety line</span><span class="hint">Drag across the chart to read any day</span></div>
   </div>
   <div class="flags">
     <div class="flag warn enter" id="warn"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg><div class="body"><b>Payroll and rent land the same week.</b><p><span class="num">$9,860</span> leaves between Oct 23 and Oct 28. Moving rent to the 1st keeps you above your safety line.</p>
@@ -419,7 +458,7 @@ function show(i){
   $('segname').textContent='Step '+(i+1)+' of 4 · '+NAMES[i];
   const h=screens[i].querySelector('h1');h.setAttribute('tabindex','-1');h.focus({preventScroll:true});
   window.scrollTo({top:0,behavior:RM?'auto':'smooth'});
-  if(i===2){stopClock();drawChart(true);countUp();}
+  if(i===2){stopClock();drawChart(true);countUp();if(goal!=='cash')playGviz();}
   if(i===3){drawMini('mini');}
 }
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),3800);}
@@ -433,7 +472,27 @@ let goal='cash'; const big0=$('big3').innerHTML;
 document.querySelectorAll('.choice').forEach(c=>c.addEventListener('click',()=>{
   document.querySelectorAll('.choice').forEach(o=>o.setAttribute('aria-pressed','false'));
   c.setAttribute('aria-pressed','true');goal=c.dataset.goal;$('go1').disabled=false;}));
-function applyGoal(){const a=ANS[goal];$('h3a').textContent=a.h;$('q3').textContent=a.q+' · Rivera Landscaping LLC';$('big3').innerHTML=a.b||big0;}
+const tick='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>';
+function gvizHTML(g){
+  if(g==='spend'){const B=[['Payroll',6420,'Oct 23','var(--amber)'],['Rent',3440,'Oct 28','var(--amber)'],['Supplies',1180,'Oct 15','var(--ink-2)']];
+    const xp=d=>((d-6)/30*100).toFixed(1)+'%';
+    return '<div class="bills">'+B.map(b=>`<div class="bill"><span class="nm">${b[0]}</span><span class="tr"><i data-w="${(b[1]/6420*100).toFixed(1)}" style="background:${b[3]}"></i></span><span class="am">${fmt(b[1])}</span><span class="wh">${b[2]}</span></div>`).join('')+'</div>'+
+      `<div class="strip" aria-hidden="true"><div class="wk" style="left:${xp(23)};width:${(5/30*100).toFixed(1)}%"><span>Same week · $9,860 out</span></div>`+
+      [[15,'var(--ink-2)'],[23,'var(--amber)'],[28,'var(--amber)']].map(([d,c],k)=>`<i class="pin" style="left:${xp(d)};background:${c};transition-delay:${.3+k*.15}s"></i>`).join('')+
+      [[6,'Oct 6'],[15,'Oct 15'],[23,'Oct 23'],[28,'Oct 28'],[36,'Nov 5']].map(([d,t])=>`<span class="tk" style="left:${xp(d)}">${t}</span>`).join('')+'</div>';}
+  if(g==='tax'){return `<div class="tax"><div class="goalrow"><span>Q4 estimate · due Jan 15</span><b>$3,900</b></div>
+    <div class="track">${['Nov 1','Dec 1','Jan 1'].map(m=>`<div class="blk"><i></i><span>${m}<span class="mono">$1,300</span></span></div>`).join('')}</div>
+    <div class="hold"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg>Hold off during Oct 23–28. Start after the Nov 1 invoices clear.</div></div>`;}
+  return '';}
+function playGviz(){const v=$('gviz');v.classList.remove('in');v.querySelectorAll('.tr i').forEach(i=>i.style.width='0');v.querySelectorAll('.blk').forEach(b=>{b.classList.remove('on');b.querySelector('i').style.transform=''});
+  const go=()=>{v.classList.add('in');v.querySelectorAll('.tr i').forEach(i=>i.style.width=i.dataset.w+'%');
+    v.querySelectorAll('.blk').forEach((b,k)=>setTimeout(()=>{b.classList.add('on');b.querySelector('i').style.transform='scaleX(1)'},RM?0:250+k*450));};
+  RM?go():requestAnimationFrame(()=>requestAnimationFrame(go));}
+function applyGoal(){const a=ANS[goal];$('h3a').textContent=a.h;$('q3').textContent=a.q+' · Rivera Landscaping LLC';$('big3').innerHTML=a.b||big0;
+  document.querySelectorAll('.qswitch button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.g===goal)));
+  document.querySelectorAll('.choice').forEach(c=>c.setAttribute('aria-pressed',String(c.dataset.goal===goal)));
+  const h=gvizHTML(goal);$('gviz').innerHTML=h;$('gviz').hidden=!h;$('chartttl').hidden=!h;if(h)playGviz();}
+document.querySelectorAll('.qswitch button').forEach(b=>b.addEventListener('click',()=>{if(goal===b.dataset.g)return;goal=b.dataset.g;applyGoal();countUp();drawChart(false);}));
 $('go1').onclick=()=>{applyGoal();show(1);};
 
 /* ---------- 2 · connect + live sort ---------- */
@@ -480,6 +539,7 @@ const MOVED=BASE.map((v,i)=>i>=22&&i<=25?v+3440:v);
 let cur=BASE.slice(), hover=null, moved=false;
 let W=640;const H=250,P={l:46,r:14,t:30,b:28},MAX=22000;
 const X=i=>P.l+i*(W-P.l-P.r)/30, Y=v=>P.t+(1-v/MAX)*(H-P.t-P.b);
+const SPR=i=>0.4*(1800+i*230), fk=v=>'$'+(v/1000).toFixed(1)+'k';
 function pathFor(s){return s.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join('');}
 function minIdx(s){let m=0;s.forEach((v,i)=>{if(v<s[m])m=i});return m;}
 function drawChart(intro){
@@ -489,12 +549,13 @@ function drawChart(intro){
   [0,5000,10000,15000,20000].forEach(v=>{g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)" stroke-width="1"/><text class="ax" x="${P.l-10}" y="${Y(v)+4}" text-anchor="end">${v/1000}k</text>`});
   (W<480?[[0,'start'],[14,'middle'],[22,'middle'],[30,'end']]:[[0,'start'],[7,'middle'],[14,'middle'],[22,'middle'],[30,'end']]).forEach(([i,a])=>g+=`<text class="ax" x="${X(i)}" y="${H-6}" text-anchor="${a}">${day(i)}</text>`);
   g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(5000)}" y2="${Y(5000)}" stroke="var(--amber)" stroke-width="1.5" stroke-dasharray="5 5"/>`;
-  g+=`<g clip-path="url(#rev)"><path d="${pathFor(s)}L${X(30)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#fill)"/><path id="ln" d="${pathFor(s)}" fill="none" stroke="var(--green)" stroke-width="2.75" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${X(30)}" cy="${Y(s[30])}" r="4" fill="var(--green)"/></g>`;
+  const up=s.map((v,i)=>v+SPR(i)),dn=s.map((v,i)=>Math.max(0,v-SPR(i)));
+  g+=`<g clip-path="url(#rev)"><path d="${up.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join('')}${dn.map((v,i)=>'L'+X(30-i).toFixed(1)+','+Y(dn[30-i]).toFixed(1)).join('')}Z" fill="var(--amber)" opacity=".15"/><path d="${pathFor(s)}L${X(30)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#fill)"/><path id="ln" d="${pathFor(s)}" fill="none" stroke="var(--green)" stroke-width="2.75" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${X(30)}" cy="${Y(s[30])}" r="4" fill="var(--green)"/></g>`;
   const lc=safe?'var(--green)':'var(--amber)', lx=X(mi), ly=Y(s[mi]);
   g+=`<g id="low" style="opacity:${intro&&!RM?0:1};transition:opacity .5s"><circle class="pulse" cx="${lx}" cy="${ly}" r="6" fill="${lc}"/><circle cx="${lx}" cy="${ly}" r="6" fill="${lc}" stroke="var(--card)" stroke-width="2.5"/><text class="lowlbl" x="${lx>W-90?W-P.r:lx}" y="${ly+24}" text-anchor="${lx>W-90?'end':'middle'}" fill="${lc}">Low ${fmt(s[mi])} · ${day(mi)}</text></g>`;
-  if(hover!==null){const hx=X(hover),hy=Y(s[hover]),bw=118,bx=Math.max(P.l,Math.min(W-P.r-bw,hx-bw/2));
+  if(hover!==null){const hx=X(hover),hy=Y(s[hover]),bw=196,bx=Math.max(P.l,Math.min(W-P.r-bw,hx-bw/2));
     g+=`<line x1="${hx}" x2="${hx}" y1="${P.t-6}" y2="${H-P.b}" stroke="var(--ink)" stroke-width="1" opacity=".35"/><circle cx="${hx}" cy="${hy}" r="5" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>`+
-       `<g><rect class="tipbox" x="${bx}" y="0" width="${bw}" height="36" rx="8"/><text class="tiptx" x="${bx+12}" y="16">${fmt(s[hover])}</text><text class="tipsub" x="${bx+12}" y="29">${day(hover)}${s[hover]<5000?' · below line':''}</text></g>`;}
+       `<g><rect class="tipbox" x="${bx}" y="0" width="${bw}" height="36" rx="8"/><text class="tiptx" x="${bx+12}" y="16">${fmt(s[hover])}</text><text class="tipsub" x="${bx+12}" y="29">${day(hover)} · range ${fk(dn[hover])}–${fk(up[hover])}</text></g>`;}
   svg.innerHTML=g;
   const k=hover??mi;svg.setAttribute('aria-valuenow',k);svg.setAttribute('aria-valuetext',`${day(k)}: ${fmt(s[k])}${k===mi?', lowest point':''}`);
   if(intro&&!RM){const r=$('revR');r.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:1500,easing:'cubic-bezier(.65,0,.35,1)',fill:'forwards'}).onfinish=()=>{r.style.transform='scaleX(1)';const lo=$('low');if(lo)lo.style.opacity=1;};}
